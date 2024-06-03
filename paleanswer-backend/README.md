@@ -78,7 +78,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_db
+    url: jdbc:mysql://localhost:3306/paleanswer
     username: root
     password: 123456
 ```
@@ -166,7 +166,7 @@ PUT post_v1
 
 ```
 // 指定生成参数
-String packageName = "com.yupi.springbootinit";
+String packageName = "com.yupi.paleanswer";
 String dataName = "用户评论";
 String dataKey = "userComment";
 String upperDataKey = "UserComment";

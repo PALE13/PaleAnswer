@@ -1,9 +1,9 @@
 <template>
-  <a-row class="globalHeadero" align="center" :wrap="false">
+  <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
-        :default-selected-keys="['1']"
+        :selected-keys="selectedKeys"
         @menu-item-click="doMenuClick"
       >
         <a-menu-item
@@ -12,8 +12,8 @@
           disabled
         >
           <div class="titleBar">
-            <img class="logo" src="@/assets/logo.png" alt="" />
-            <div class="title"><strong>PaleAnswer</strong></div>
+            <img class="logo" src="../assets/logo.png" />
+            <div class="title">PaleAnser</div>
           </div>
         </a-menu-item>
         <a-menu-item v-for="item in visibleRoutes" :key="item.path">
@@ -55,7 +55,7 @@ const visibleRoutes = computed(() => {
     if (item.meta?.hideInMenu) {
       return false;
     }
-    //根据权限过滤菜单
+    // 根据权限过滤菜单
     if (!checkAccess(loginUserStore.loginUser, item.meta?.access as string)) {
       return false;
     }
@@ -63,7 +63,7 @@ const visibleRoutes = computed(() => {
   });
 });
 
-//点击菜单跳转到对应页面
+// 点击菜单跳转到对应页面
 const doMenuClick = (key: string) => {
   router.push({
     path: key,

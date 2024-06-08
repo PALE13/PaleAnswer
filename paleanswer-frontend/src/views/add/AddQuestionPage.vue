@@ -2,11 +2,11 @@
   <div id="addQuestionPage">
     <h2 style="margin-bottom: 32px">设置题目</h2>
     <a-form
-      :model="questionContent"
-      :style="{ width: '480px' }"
-      label-align="left"
-      auto-label-width
-      @submit="handleSubmit"
+        :model="questionContent"
+        :style="{ width: '480px' }"
+        label-align="left"
+        auto-label-width
+        @submit="handleSubmit"
     >
       <a-form-item label="应用 id">
         {{ appId }}
@@ -18,8 +18,11 @@
           </a-button>
           <!-- AI 生成抽屉 -->
           <AiGenerateQuestionDrawer
-            :appId="appId"
-            :onSuccess="onAiGenerateSuccess"
+              :appId="appId"
+              :onSuccess="onAiGenerateSuccess"
+              :onSSESuccess="onAiGenerateSuccessSSE"
+              :onSSEClose="onSSEClose"
+              :onSSEStart="onSSEStart"
           />
         </a-space>
         <!-- 遍历每道题目 -->
@@ -30,9 +33,9 @@
               添加题目
             </a-button>
             <a-button
-              size="small"
-              status="danger"
-              @click="deleteQuestion(index)"
+                size="small"
+                status="danger"
+                @click="deleteQuestion(index)"
             >
               删除题目
             </a-button>
@@ -44,18 +47,18 @@
           <a-space size="large">
             <h4>题目 {{ index + 1 }} 选项列表</h4>
             <a-button
-              size="small"
-              @click="addQuestionOption(question, question.options.length)"
+                size="small"
+                @click="addQuestionOption(question, question.options.length)"
             >
               底部添加选项
             </a-button>
           </a-space>
           <a-form-item
-            v-for="(option, optionIndex) in question.options"
-            :key="optionIndex"
-            :label="`选项 ${optionIndex + 1}`"
-            :content-flex="false"
-            :merge-props="false"
+              v-for="(option, optionIndex) in question.options"
+              :key="optionIndex"
+              :label="`选项 ${optionIndex + 1}`"
+              :content-flex="false"
+              :merge-props="false"
           >
             <a-form-item label="选项 key">
               <a-input v-model="option.key" placeholder="请输入选项 key" />
@@ -68,21 +71,21 @@
             </a-form-item>
             <a-form-item label="选项得分">
               <a-input-number
-                v-model="option.score"
-                placeholder="请输入选项得分"
+                  v-model="option.score"
+                  placeholder="请输入选项得分"
               />
             </a-form-item>
             <a-space size="large">
               <a-button
-                size="mini"
-                @click="addQuestionOption(question, optionIndex + 1)"
+                  size="mini"
+                  @click="addQuestionOption(question, optionIndex + 1)"
               >
                 添加选项
               </a-button>
               <a-button
-                size="mini"
-                status="danger"
-                @click="deleteQuestionOption(question, optionIndex as any)"
+                  size="mini"
+                  status="danger"
+                  @click="deleteQuestionOption(question, optionIndex as any)"
               >
                 删除选项
               </a-button>
@@ -167,8 +170,8 @@ const addQuestionOption = (question: API.QuestionContentDTO, index: number) => {
  * @param index
  */
 const deleteQuestionOption = (
-  question: API.QuestionContentDTO,
-  index: number
+    question: API.QuestionContentDTO,
+    index: number
 ) => {
   if (!question.options) {
     question.options = [];
@@ -244,5 +247,28 @@ const handleSubmit = async () => {
 const onAiGenerateSuccess = (result: API.QuestionContentDTO[]) => {
   message.success(`AI 生成题目成功，生成 ${result.length} 道题目`);
   questionContent.value = [...questionContent.value, ...result];
+};
+
+/**
+ * AI 生成题目成功后执行（SSE）
+ */
+const onAiGenerateSuccessSSE = (result: API.QuestionContentDTO) => {
+  questionContent.value = [...questionContent.value, result];
+};
+
+/**
+ * SSE 开始生成
+ * @param event
+ */
+const onSSEStart = (event: any) => {
+  message.success("开始生成");
+};
+
+/**
+ * SSE 生成完毕
+ * @param event
+ */
+const onSSEClose = (event: any) => {
+  message.success("生成完毕");
 };
 </script>

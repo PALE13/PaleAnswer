@@ -49,6 +49,12 @@ public class AppQueryRequest extends PageRequest implements Serializable {
      */
     private Integer scoringStrategy;
 
+
+    /**
+     * 审核人 id
+     */
+    private Long reviewerId;
+
     /**
      * 审核状态：0-待审核, 1-通过, 2-拒绝
      */

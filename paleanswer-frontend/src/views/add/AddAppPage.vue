@@ -17,12 +17,11 @@
       <a-form-item field="appIcon" label="应用图标">
         <a-input v-model="form.appIcon" placeholder="请输入应用图标" />
       </a-form-item>
-      <!--      <a-form-item field="appIcon" label="应用图标">-->
-      <!--        <PictureUploader-->
-      <!--          :value="form.appIcon"-->
-      <!--          :onChange="(value) => (form.appIcon = value)"-->
-      <!--        />-->
-      <!--      </a-form-item>-->
+<!--      <a-form-item field="appIcon" label="应用图标">-->
+<!--        <pictureUploader :value="form.appIcon"-->
+<!--          :onChange="(value) => (form.appIcon = value)">-->
+<!--        </pictureUploader>-->
+<!--      </a-form-item>-->
       <a-form-item field="appType" label="应用类型">
         <a-select
           v-model="form.appType"
@@ -69,6 +68,7 @@ import {
   getAppVoByIdUsingGet,
 } from "@/api/appController";
 import { APP_SCORING_STRATEGY_MAP, APP_TYPE_MAP } from "@/constant/app";
+import PictureUploader from "@/components/PictureUploader.vue";
 
 interface Props {
   id: string;
@@ -126,25 +126,17 @@ const handleSubmit = async () => {
       id: props.id as any,
       ...form.value,
     });
-    if (res.data.code === 0) {
-      message.success("操作成功，即将跳转到应用详情页");
-      setTimeout(() => {
-        router.push(`/app/detail/${props.id}`);
-      }, 2000);
-    } else {
-      message.error("操作失败，" + res.data.message);
-    }
   } else {
     // 创建
     res = await addAppUsingPost(form.value);
-    if (res.data.code === 0) {
-      message.success("操作成功，即将跳转到应用详情页");
-      setTimeout(() => {
-        router.push(`/app/detail/${res.data.data}`);
-      }, 2000);
-    } else {
-      message.error("操作失败，" + res.data.message);
-    }
+  }
+  if (res.data.code === 0) {
+    message.success("操作成功，即将跳转到应用详情页");
+    setTimeout(() => {
+      router.push(`/app/detail/${props.id || res.data.data}`);
+    }, 3000);
+  } else {
+    message.error("操作失败，" + res.data.message);
   }
 };
 </script>

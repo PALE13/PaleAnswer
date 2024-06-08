@@ -83,3 +83,8 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.pale.paleanswer.controller
+
+
+# AI 配置
+ai:
+  apiKey: cdc1ceff3e602b8c2be755197658db79.8U94wW1xShxuoP7k

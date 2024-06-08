@@ -168,10 +168,11 @@ public class AppController {
                                                                HttpServletRequest request) {
         long current = appQueryRequest.getCurrent();
         long size = appQueryRequest.getPageSize();
+        long reviewStatus = appQueryRequest.getReviewStatus();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
         // 只能看到已过审的应用
-        appQueryRequest.setReviewStatus(ReviewStatusEnum.PASS.getValue());
+//        appQueryRequest.setReviewStatus(ReviewStatusEnum.PASS.getValue());
         // 查询数据库
         Page<App> appPage = appService.page(new Page<>(current, size),
                 appService.getQueryWrapper(appQueryRequest));
@@ -203,6 +204,8 @@ public class AppController {
         // 获取封装类
         return ResultUtils.success(appService.getAppVOPage(appPage, request));
     }
+
+
 
     /**
      * 编辑应用（给用户使用）

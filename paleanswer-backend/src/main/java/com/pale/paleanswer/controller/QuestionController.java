@@ -378,10 +378,7 @@ public class QuestionController {
                             stringBuilder.setLength(0);
                         }
                     }
-                })
-                .doOnError((e) -> log.error("sse error", e))
-                .doOnComplete(sseEmitter::complete)
-                .subscribe();
+                }).doOnComplete(sseEmitter::complete).subscribe();
         return sseEmitter;
     }
     // endregion

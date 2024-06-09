@@ -92,6 +92,7 @@ public class UserAnswerController {
         try {
             UserAnswer userAnswerWithResult = scoringStrategyExecutor.doScore(choices, app);
             userAnswerWithResult.setId(newUserAnswerId);
+            userAnswerWithResult.setAppId(null); //分表后，不能修改分片键
             userAnswerService.updateById(userAnswerWithResult);
         } catch (Exception e) {
             e.printStackTrace();

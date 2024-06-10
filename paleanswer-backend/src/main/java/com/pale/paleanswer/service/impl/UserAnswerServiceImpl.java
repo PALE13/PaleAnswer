@@ -83,6 +83,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         // 从对象中取值
         Long id = userAnswerQueryRequest.getId();
         Long appId = userAnswerQueryRequest.getAppId();
+        String appName = userAnswerQueryRequest.getAppName();
         Integer appType = userAnswerQueryRequest.getAppType();
         Integer scoringStrategy = userAnswerQueryRequest.getScoringStrategy();
         String choices = userAnswerQueryRequest.getChoices();
@@ -105,12 +106,14 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
         }
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(choices), "choices", choices);
+        queryWrapper.like(StringUtils.isNotBlank(appName), "appName", appName);
         queryWrapper.like(StringUtils.isNotBlank(resultName), "resultName", resultName);
         queryWrapper.like(StringUtils.isNotBlank(resultDesc), "resultDesc", resultDesc);
         queryWrapper.like(StringUtils.isNotBlank(resultPicture), "resultPicture", resultPicture);
         // 精确查询
         queryWrapper.ne(ObjectUtils.isNotEmpty(notId), "id", notId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(id), "id", id);
+        queryWrapper.eq(ObjectUtils.isNotEmpty(appId), "appId", appId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(userId), "userId", userId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(resultId), "resultId", resultId);
         queryWrapper.eq(ObjectUtils.isNotEmpty(appId), "appId", appId);
@@ -135,8 +138,7 @@ public class UserAnswerServiceImpl extends ServiceImpl<UserAnswerMapper, UserAns
     public UserAnswerVO getUserAnswerVO(UserAnswer userAnswer, HttpServletRequest request) {
         // 对象转封装类
         UserAnswerVO userAnswerVO = UserAnswerVO.objToVo(userAnswer);
-
-        // todo 可以根据需要为封装对象补充值，不需要的内容可以删除
+        // 可以根据需要为封装对象补充值
         // region 可选
         // 1. 关联查询用户信息
         Long userId = userAnswer.getUserId();

@@ -7,6 +7,7 @@
     <resultMap id="BaseResultMap" type="com.pale.paleanswer.model.entity.UserAnswer">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="appId" column="appId" jdbcType="BIGINT"/>
+            <result property="appName" column="appName" jdbcType="VARCHAR"/>
             <result property="appType" column="appType" jdbcType="TINYINT"/>
             <result property="scoringStrategy" column="scoringStrategy" jdbcType="TINYINT"/>
             <result property="choices" column="choices" jdbcType="VARCHAR"/>
@@ -22,7 +23,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,appId,appType,
+        id,appId,appName,appType,
         scoringStrategy,choices,resultId,
         resultName,resultDesc,resultPicture,
         resultScore,userId,createTime,

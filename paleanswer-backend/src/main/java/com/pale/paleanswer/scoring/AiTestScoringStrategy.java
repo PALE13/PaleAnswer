@@ -6,7 +6,6 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.pale.paleanswer.common.PageRequest;
 import com.pale.paleanswer.manager.AiManager;
 import com.pale.paleanswer.model.dto.question.QuestionAnswerDTO;
 import com.pale.paleanswer.model.dto.question.QuestionContentDTO;

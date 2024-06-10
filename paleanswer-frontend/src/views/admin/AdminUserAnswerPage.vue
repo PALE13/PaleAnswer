@@ -26,6 +26,13 @@
         allow-clear
       />
     </a-form-item>
+    <a-form-item field="appId" label="应用名称">
+      <a-input
+        v-model="formSearchParams.appName"
+        placeholder="请输入应用名称"
+        allow-clear
+      />
+    </a-form-item>
     <a-form-item field="userId" label="用户 id">
       <a-input
         v-model="formSearchParams.userId"
@@ -173,7 +180,7 @@ const columns = [
     dataIndex: "resultId",
   },
   {
-    title: "名称",
+    title: "结果",
     dataIndex: "resultName",
   },
   {
@@ -192,6 +199,10 @@ const columns = [
   {
     title: "应用 id",
     dataIndex: "appId",
+  },
+  {
+    title: "应用名称",
+    dataIndex: "appName",
   },
   {
     title: "应用类型",
